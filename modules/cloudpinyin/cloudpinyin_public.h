@@ -42,7 +42,8 @@ public:
                              CloudPinyinSelectedCallback callback)
         : CandidateWord(fcitx::Text{}), selectedSentence_(selectedSentence),
           inputContext_(inputContext), callback_(std::move(callback)) {
-        setText(fcitx::Text("..."));
+        // use cloud unicode char
+        setText(fcitx::Text("\xe2\x98\x81"));
         auto ref = watch();
         cloudpinyin_->call<fcitx::ICloudPinyin::request>(
             pinyin, [ref](const std::string &pinyin, const std::string &hanzi) {
@@ -107,7 +108,7 @@ private:
                     std::chrono::high_resolution_clock::now() - timestamp_)
                     .count();
             if (ms > LOADING_TIME_QUICK_THRESHOLD) {
-                setText(fcitx::Text("..."));
+                setText(fcitx::Text("\xe2\x98\x81"));
                 word_ = std::string();
             } else {
                 modifiable->remove(idx);
